@@ -40,7 +40,6 @@ public class ExitAccountTest {
     public void cleanUp() {
         driver.quit();
     }
-
     @Test
     public void exitAccountIsSuccessful() {
         loginMethods.getLoginPage();

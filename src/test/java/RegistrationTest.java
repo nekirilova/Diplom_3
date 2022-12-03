@@ -26,7 +26,7 @@ public class RegistrationTest {
     public void setUp() {
         driver = new ChromeDriver();
      registerPageObject = new RegisterPageObject();
-
+    accountPageObject = new AccountPageObject();
         loginMethods = new LoginMethods(driver);
         loginMethods.getRegistrationPage();//открываем страницу регистрации
         loginMethods.waitForRegisterPageLoad();//ждем, когда загрузится страница регистрации
@@ -48,12 +48,15 @@ public class RegistrationTest {
         loginMethods.enterPasswordForRegister(password);
         System.out.println(password);
         loginMethods.registerButtonClick();
-        Boolean wait = new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.not(ExpectedConditions
-                        .visibilityOf(driver.findElement(registerPageObject.getERROR_MESSAGE()))));
-System.out.println(wait);
-//Assert.assertNull(driver.findElement(registerPageObject.getERROR_MESSAGE()));
-
+        loginMethods.getLoginPage();
+        loginMethods.waitForLoginPageLoad();
+        loginMethods.enterEmail(email);
+        loginMethods.enterPassword(password);
+        loginMethods.loginButtonClick();
+        loginMethods.waitForMainPageLoad();
+        loginMethods.getIntoProfile();
+        loginMethods.waitForProfilePageLoad();
+        Assert.assertTrue(driver.findElement(accountPageObject.getEXIT_BUTTON()).isDisplayed());
 
     }
 

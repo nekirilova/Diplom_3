@@ -19,6 +19,8 @@ public class LoginMethods {
     LoginPageObject loginPageObject = new LoginPageObject();
     MainPageObject mainPageObject = new MainPageObject();
     AccountPageObject accountPageObject = new AccountPageObject();
+    ForgotPasswordPageObject forgotPasswordPageObject
+             = new ForgotPasswordPageObject();
 
     //метод для открытия страницы регистрации
     public void getRegistrationPage() {
@@ -49,6 +51,12 @@ public class LoginMethods {
     public void registerButtonClick()
     {
         driver.findElement(registerPageObject.getREGISTER_BUTTON()).click();
+    }
+
+    //метод для клика по кнопке Войти на странице регистрации
+
+    public void loginButtonFromRegistrationPageClick() {
+        driver.findElement(registerPageObject.getLOGIN_BUTTON()).click();
     }
 //метод для проверки, появилось ли сообщение об ошибке
     public By noErrorMessage() {
@@ -101,10 +109,30 @@ public class LoginMethods {
     public void registerLinkClick() {
         driver.findElement(loginPageObject.getREGISTER_LINK());
     }
-//метод для ожидания загрузки главной страницы
+
+    //метод для клика по кнопке Восстановить пароль
+
+    public void restorePasswordButtonClick() {
+        driver.findElement(loginPageObject.getRESTORE_PASSWORD()).click();
+    }
+
+    //метод для открытия главной страниц
+    public void getMainPage() {
+        driver.get(mainPageObject.getMAIN_PAGE());
+    }
+
+    //метод для ожидания загрузки главной страницы
     public void waitForMainPageLoad() {
         new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions
                 .elementToBeClickable(mainPageObject.getPERSONAL_CABINET()));
+    }
+
+    //метод для клика по кнопке Войти в аккаунт
+    public void enterAccountButtonClick() {
+       WebElement enterAccountButton = driver.findElement(mainPageObject.getENTER_ACCOUNT_BUTTON());
+       new WebDriverWait(driver, Duration.ofSeconds(5))
+               .until(ExpectedConditions.elementToBeClickable(enterAccountButton));
+       enterAccountButton.click();
     }
     //метод для клика по кнопке личный кабинет на главной странице
     public void getIntoProfile() {
@@ -116,8 +144,17 @@ public class LoginMethods {
         new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions
                 .elementToBeClickable(accountPageObject.getEXIT_BUTTON()));
     }
-
+//метод для клика по кнопке Выход
     public void exitProfile() {
         driver.findElement(accountPageObject.getEXIT_BUTTON()).click();
     }
+//метод ожидания загрузки страницы восстановления пароля
+    public void waitForForgotPasswordPageWait() {
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.elementToBeClickable(forgotPasswordPageObject.getENTER_BUTTON()));
+    }
+//метод для клика по кнопке Войти на странице восстановления пароля
+  public void enterButtonFromForgotPasswordClick() {
+        driver.findElement(forgotPasswordPageObject.getENTER_BUTTON());
+  }
 }

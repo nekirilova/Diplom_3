@@ -50,8 +50,13 @@ public class LoginPageObject {
    // private final By PASSWORD_FIELD = By.xpath(".//input[@type='password']");
     private final By LOGIN_BUTTON = By.xpath(".//button[text()='Войти']");
     private final By REGISTER_LINK = By.cssSelector("div>p:first-of-type>a");
-    //метод ожидания загрузки страницы
 
+
+    private final By RESTORE_PASSWORD = By.xpath(".//p/a[text()='Восстановить пароль']");
+
+    public By getRESTORE_PASSWORD() {
+        return RESTORE_PASSWORD;
+    }
 
 
 
