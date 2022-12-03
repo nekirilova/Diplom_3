@@ -1,28 +1,28 @@
 package ru.package_model;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class AccountPageObject {
-    public AccountPageObject(WebDriver driver) {
-        this.driver = driver;
-    }
 
-    private WebDriver driver;
-    private final String ACCOUNT_PAGE = "https://stellarburgers.nomoreparties.site/account/profile";
-    private final By PROFILE_SECTION = By.xpath(".//a[text()='Профиль']");
-    private final By TEXT = By.cssSelector("nav>p");
-
-    public void waitForPageLoad() {
-        new WebDriverWait(driver, Duration.ofSeconds(7))
-                .until(ExpectedConditions.elementToBeClickable(driver.findElement(PROFILE_SECTION)));
+    public String getACCOUNT_PAGE() {
+        return ACCOUNT_PAGE;
     }
 
     public By getPROFILE_SECTION() {
         return PROFILE_SECTION;
     }
+
+    public By getTEXT() {
+        return TEXT;
+    }
+
+    public By getEXIT_BUTTON() {
+        return EXIT_BUTTON;
+    }
+
+    private final String ACCOUNT_PAGE = "https://stellarburgers.nomoreparties.site/account/profile";
+    private final By PROFILE_SECTION = By.xpath(".//a[text()='Профиль']");
+    private final By TEXT = By.cssSelector("nav>p");
+    private final By EXIT_BUTTON = By.xpath(".//button[text()='Выход']");
+
 }

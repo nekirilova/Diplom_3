@@ -6,17 +6,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ru.package_model.*;
+import ru.package_model.CredentialsGenerator;
+import ru.package_model.LoginMethods;
 
 import java.time.Duration;
 
-public class RegistrationTest {
+public class ExitAccountTest {
+
     private WebDriver driver;
-    private MainPageObject mainPageObject;
+
     CredentialsGenerator credentialsGenerator;
-    private RegisterPageObject registerPageObject;
-    private AccountPageObject accountPageObject;
-    private LoginPageObject loginPageObject;
     private LoginMethods loginMethods;
     private String name;
     private String email;
@@ -25,8 +24,6 @@ public class RegistrationTest {
     @Before
     public void setUp() {
         driver = new ChromeDriver();
-     registerPageObject = new RegisterPageObject();
-
         loginMethods = new LoginMethods(driver);
         loginMethods.getRegistrationPage();//открываем страницу регистрации
         loginMethods.waitForRegisterPageLoad();//ждем, когда загрузится страница регистрации
@@ -34,27 +31,32 @@ public class RegistrationTest {
         name = credentialsGenerator.getRandomName();
         email = credentialsGenerator.getRandomEmail();
         password = credentialsGenerator.getRandomPassword();
+        loginMethods.enterNameForRegister(name);
+        loginMethods.enterEmailForRegister(email);
+        loginMethods.enterPasswordForRegister(password);
+        loginMethods.registerButtonClick();
     }
     @After
     public void cleanUp() {
-      driver.quit();
+        driver.quit();
     }
 
     @Test
-    public void registrationWithCorrectDataIsSuccessful() {
-        loginMethods.enterNameForRegister(name);
-        loginMethods.enterEmailForRegister(email);
-        System.out.println(email);
-        loginMethods.enterPasswordForRegister(password);
-        System.out.println(password);
-        loginMethods.registerButtonClick();
-        Boolean wait = new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.not(ExpectedConditions
-                        .visibilityOf(driver.findElement(registerPageObject.getERROR_MESSAGE()))));
-System.out.println(wait);
-//Assert.assertNull(driver.findElement(registerPageObject.getERROR_MESSAGE()));
-
-
+    public void exitAccountIsSuccessful() {
+        loginMethods.getLoginPage();
+        loginMethods.waitForLoginPageLoad();
+        loginMethods.enterEmail(email);
+        loginMethods.enterPassword(password);
+        loginMethods.loginButtonClick();
+        loginMethods.waitForMainPageLoad();
+        loginMethods.getIntoProfile();
+        loginMethods.waitForProfilePageLoad();
+        loginMethods.exitProfile();
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.urlToBe("https://stellarburgers.nomoreparties.site/login"));
+        String expectedUrl = "https://stellarburgers.nomoreparties.site/login";
+        String actualUrl = driver.getCurrentUrl();
+        System.out.println(actualUrl);
+        Assert.assertEquals("Incorrect URL", expectedUrl, actualUrl);
     }
-
 }

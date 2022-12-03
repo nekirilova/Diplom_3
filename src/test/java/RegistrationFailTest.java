@@ -3,9 +3,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import ru.package_model.*;
+import ru.package_model.CredentialsGenerator;
+import ru.package_model.LoginMethods;
 
 public class RegistrationFailTest {
 
