@@ -144,6 +144,24 @@ public class LoginMethods {
         new WebDriverWait(driver, Duration.ofSeconds(5)).until(ExpectedConditions
                 .elementToBeClickable(accountPageObject.getEXIT_BUTTON()));
     }
+
+    //метод для перехода из личного кабинета на главную страницу по кнопке "Конструктор"
+    public void getIntoMainPageByConstructorButton() {
+        WebElement constructorButton = driver
+                .findElement(accountPageObject.getCONSTRUCTOR());
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.elementToBeClickable(constructorButton));
+        constructorButton.click();
+    }
+
+    //метод для перехода из личного кабинета на главную страницу кликом на логотип
+    public void getIntoMainPageByLogo() {
+        WebElement logo = driver
+                .findElement(accountPageObject.getLOGO());
+        new WebDriverWait(driver, Duration.ofSeconds(5))
+                .until(ExpectedConditions.elementToBeClickable(logo));
+        logo.click();
+    }
 //метод для клика по кнопке Выход
     public void exitProfile() {
         driver.findElement(accountPageObject.getEXIT_BUTTON()).click();

@@ -25,4 +25,14 @@ public class AccountPageObject {
     private final By TEXT = By.cssSelector("nav>p");
     private final By EXIT_BUTTON = By.xpath(".//button[text()='Выход']");
 
+    private final By CONSTRUCTOR = By.xpath(".//a/p[text()='Конструктор']");
+    private final By LOGO = By.cssSelector("header>nav>div>a");
+
+    public By getLOGO() {
+        return LOGO;
+    }
+
+    public By getCONSTRUCTOR() {
+        return CONSTRUCTOR;
+    }
 }
