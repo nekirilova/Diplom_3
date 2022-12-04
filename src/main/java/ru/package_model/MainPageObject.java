@@ -3,8 +3,7 @@ package ru.package_model;
 import org.openqa.selenium.By;
 
 public class MainPageObject {
-
-
+//локаторы главной страницы
     private final String MAIN_PAGE = "https://stellarburgers.nomoreparties.site/"; //главная страница
     private final By PERSONAL_CABINET = By.xpath(".//p[text()='Личный Кабинет']"); //селектор для кнопки Личный кабинет
     private final By BUN = By.xpath(".//div/span[text()='Булки']"); //локатор для раздела Булки
@@ -15,7 +14,7 @@ public class MainPageObject {
     private final By SPICY_X = By.xpath(".//ul/a/p[text()='Соус Spicy-X']"); //локатор для соуса Spicy-X
     private final By MEAT = By.xpath(".//ul/a/p[text()='Мясо бессмертных моллюсков Protostomia']");//Локатор для начинки
     private final By SHINY_BUN = By.xpath(".//ul/a/p[text()='Флюоресцентная булка R2-D3']");//локатор для булки
-
+//геттеры для локаторов главной страницы
     public String getMAIN_PAGE() {
         return MAIN_PAGE;
     }

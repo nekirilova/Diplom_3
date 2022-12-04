@@ -9,7 +9,6 @@ import java.time.Duration;
 
 public class ConstructorMethods {
     private WebDriver driver;
-
     public ConstructorMethods(WebDriver driver) {
         this.driver = driver;
     }
