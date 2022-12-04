@@ -1,9 +1,11 @@
+import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.package_model.CredentialsGenerator;
@@ -17,26 +19,27 @@ public class EnterProfileTest {
     private MainPageObject mainPageObject;
     private LoginMethods loginMethods;
     CredentialsGenerator credentialsGenerator;
-
     private String name;
     private String email;
     private String password;
 
     @Before
     public void setUp() {
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
+        driver = new ChromeDriver(options);
         loginMethods = new LoginMethods(driver);
         loginMethods.getRegistrationPage();//открываем страницу регистрации
         loginMethods.waitForRegisterPageLoad();//ждем, когда загрузится страница регистрации
         credentialsGenerator = new CredentialsGenerator();
         mainPageObject = new MainPageObject();
-        name = credentialsGenerator.getRandomName();
-        email = credentialsGenerator.getRandomEmail();
-        password = credentialsGenerator.getRandomPassword();
-        loginMethods.enterNameForRegister(name);
-        loginMethods.enterEmailForRegister(email);
-        loginMethods.enterPasswordForRegister(password);
-        loginMethods.registerButtonClick();
+        name = credentialsGenerator.getRandomName(); //создаем рандомное имя
+        email = credentialsGenerator.getRandomEmail();//создаем рандомный емейл
+        password = credentialsGenerator.getRandomPassword();//создаем рандомный пароль
+        loginMethods.enterNameForRegister(name);//вводим Имя в поле имя
+        loginMethods.enterEmailForRegister(email);//вводим емейл в поле
+        loginMethods.enterPasswordForRegister(password);//вводим пароль в поле
+        loginMethods.registerButtonClick();//нажимаем на кнопку Зарегистрироваться
     }
     @After
     public void cleanUp() {
@@ -44,77 +47,81 @@ public class EnterProfileTest {
     }
 
     @Test
+    @DisplayName("Тест: в профиль можно войти через кнопку на главной странице")
     public void enterAccountFromMainPageButtonIsSuccessful() {
-        loginMethods.getMainPage();
-        loginMethods.waitForMainPageLoad();
-        loginMethods.enterAccountButtonClick();
-        loginMethods.waitForLoginPageLoad();
-        loginMethods.enterEmail(email);
-        loginMethods.enterPassword(password);
-        loginMethods.loginButtonClick();
-        loginMethods.waitForMainPageLoad();
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        loginMethods.getMainPage(); //открываем главную страницу
+        loginMethods.waitForMainPageLoad();//ждем загрузку страницы
+        loginMethods.enterAccountButtonClick(); //нажимаем  на кнопку Войти в профиль
+        loginMethods.waitForLoginPageLoad();//ждем загрузку страницы
+        loginMethods.enterEmail(email); //вводим емейл
+        loginMethods.enterPassword(password);//вводим пароль
+        loginMethods.loginButtonClick(); //нажимаем на кнопку авторизации
+        loginMethods.waitForMainPageLoad();// ждем загрузку страницы
+        new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.urlToBe(mainPageObject.getMAIN_PAGE()));
-        String expectedUrl = mainPageObject.getMAIN_PAGE();
-        String actualUrl = driver.getCurrentUrl();
-        System.out.println(actualUrl);
+        String expectedUrl = mainPageObject.getMAIN_PAGE();//ожидаемый URL
+        String actualUrl = driver.getCurrentUrl(); //фактический URL
+        //сверяем ожидаемый и фактический адрес страницы
         Assert.assertEquals("Incorrect URL", expectedUrl, actualUrl);
     }
 
     @Test
+    @DisplayName("Тест: в профиль можно войти через кнопку Личный кабинет на главной странице")
     public void enterAccountFromPersonalCabinetButtonIsSuccessful() {
-        loginMethods.getMainPage();
-        loginMethods.waitForMainPageLoad();
-        loginMethods.getIntoProfile();
-        loginMethods.waitForLoginPageLoad();
-        loginMethods.enterEmail(email);
-        loginMethods.enterPassword(password);
-        loginMethods.loginButtonClick();
-        loginMethods.waitForMainPageLoad();
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        loginMethods.getMainPage(); //открываем главную страницу
+        loginMethods.waitForMainPageLoad();//ждем загрузку страницы
+        loginMethods.getIntoProfile(); //нажимаем на кнопку Личный кабинет
+        loginMethods.waitForLoginPageLoad();//дждем загрузку страницы
+        loginMethods.enterEmail(email); //вводим емейл
+        loginMethods.enterPassword(password);//вводим пароль
+        loginMethods.loginButtonClick(); //нажимаем на кнопку авторизации
+        loginMethods.waitForMainPageLoad();// ждем загрузку страницы
+        new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.urlToBe(mainPageObject.getMAIN_PAGE()));
-        String expectedUrl = mainPageObject.getMAIN_PAGE();
-        String actualUrl = driver.getCurrentUrl();
-        System.out.println(actualUrl);
+        String expectedUrl = mainPageObject.getMAIN_PAGE();//ожидаемый URL
+        String actualUrl = driver.getCurrentUrl(); //фактический URL
+        //сверяем ожидаемый и фактический адрес страницы
         Assert.assertEquals("Incorrect URL", expectedUrl, actualUrl);
     }
 
     @Test
+    @DisplayName("Тест: в профиль можно войти через форму регистрации")
     public void enterAccountFromRegistrationFormIsSuccessful() {
-        loginMethods.getRegistrationPage();
-        loginMethods.waitForRegisterPageLoad();
+        loginMethods.getRegistrationPage();//открываем страницу регистрации
+        loginMethods.waitForRegisterPageLoad();//ждем ее загрузку
         loginMethods.loginButtonFromRegistrationPageClick();
-        loginMethods.waitForLoginPageLoad();
-        loginMethods.enterEmail(email);
-        loginMethods.enterPassword(password);
-        loginMethods.loginButtonClick();
-        loginMethods.waitForMainPageLoad();
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        loginMethods.waitForLoginPageLoad();//дждем загрузку страницы
+        loginMethods.enterEmail(email); //вводим емейл
+        loginMethods.enterPassword(password);//вводим пароль
+        loginMethods.loginButtonClick(); //нажимаем на кнопку авторизации
+        loginMethods.waitForMainPageLoad();// ждем загрузку страницы
+        new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.urlToBe(mainPageObject.getMAIN_PAGE()));
-        String expectedUrl = mainPageObject.getMAIN_PAGE();
-        String actualUrl = driver.getCurrentUrl();
-        System.out.println(actualUrl);
+        String expectedUrl = mainPageObject.getMAIN_PAGE();//ожидаемый URL
+        String actualUrl = driver.getCurrentUrl(); //фактический URL
+        //сверяем ожидаемый и фактический адрес страницы
         Assert.assertEquals("Incorrect URL", expectedUrl, actualUrl);
     }
 
     @Test
+    @DisplayName("Тест: в профиль можно войти через страницу восстановления пароля")
     public void enterAccountFromRestorePasswordButton() {
-        loginMethods.getLoginPage();
-        loginMethods.waitForLoginPageLoad();
-        loginMethods.restorePasswordButtonClick();
-        loginMethods.waitForForgotPasswordPageWait();
-        loginMethods.enterButtonFromForgotPasswordClick();
-        loginMethods.getLoginPage();
-        loginMethods.waitForLoginPageLoad();
-        loginMethods.enterEmail(email);
-        loginMethods.enterPassword(password);
-        loginMethods.loginButtonClick();
-        loginMethods.waitForMainPageLoad();
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        loginMethods.getLoginPage();//открываем страницу авторизации
+        loginMethods.waitForLoginPageLoad();//ждем ее загрузку
+        loginMethods.restorePasswordButtonClick();//нажимаем на кнопку Восстановить пароль
+        loginMethods.waitForForgotPasswordPageWait(); //ждем загрузку страницы
+        loginMethods.enterButtonFromForgotPasswordClick(); //нажимаем на кнопку Войти
+        loginMethods.getLoginPage();//заходим на страницу авторизации
+        loginMethods.waitForLoginPageLoad();//дждем загрузку страницы
+        loginMethods.enterEmail(email); //вводим емейл
+        loginMethods.enterPassword(password);//вводим пароль
+        loginMethods.loginButtonClick(); //нажимаем на кнопку авторизации
+        loginMethods.waitForMainPageLoad();// ждем загрузку страницы
+        new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.urlToBe(mainPageObject.getMAIN_PAGE()));
-        String expectedUrl = mainPageObject.getMAIN_PAGE();
-        String actualUrl = driver.getCurrentUrl();
-        System.out.println(actualUrl);
+        String expectedUrl = mainPageObject.getMAIN_PAGE();//ожидаемый URL
+        String actualUrl = driver.getCurrentUrl(); //фактический URL
+        //сверяем ожидаемый и фактический адрес страницы
         Assert.assertEquals("Incorrect URL", expectedUrl, actualUrl);
     }
 

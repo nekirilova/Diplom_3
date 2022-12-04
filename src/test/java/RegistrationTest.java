@@ -1,22 +1,17 @@
+import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.chrome.ChromeOptions;
 import ru.package_model.*;
-
-import java.time.Duration;
 
 public class RegistrationTest {
     private WebDriver driver;
-    private MainPageObject mainPageObject;
     CredentialsGenerator credentialsGenerator;
-    private RegisterPageObject registerPageObject;
     private AccountPageObject accountPageObject;
-    private LoginPageObject loginPageObject;
     private LoginMethods loginMethods;
     private String name;
     private String email;
@@ -24,16 +19,18 @@ public class RegistrationTest {
 
     @Before
     public void setUp() {
-        driver = new ChromeDriver();
-     registerPageObject = new RegisterPageObject();
-    accountPageObject = new AccountPageObject();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
+        driver = new ChromeDriver(options);
+       // RegisterPageObject registerPageObject = new RegisterPageObject();
+        accountPageObject = new AccountPageObject();
         loginMethods = new LoginMethods(driver);
         loginMethods.getRegistrationPage();//открываем страницу регистрации
         loginMethods.waitForRegisterPageLoad();//ждем, когда загрузится страница регистрации
         credentialsGenerator = new CredentialsGenerator();
-        name = credentialsGenerator.getRandomName();
-        email = credentialsGenerator.getRandomEmail();
-        password = credentialsGenerator.getRandomPassword();
+        name = credentialsGenerator.getRandomName(); //создаем рандомное имя
+        email = credentialsGenerator.getRandomEmail();//создаем рандомный емейл
+        password = credentialsGenerator.getRandomPassword();//создаем рандомный пароль
     }
     @After
     public void cleanUp() {
@@ -41,22 +38,21 @@ public class RegistrationTest {
     }
 
     @Test
+    @DisplayName("Тест: можно зарегистрироваться с корректными данными")
     public void registrationWithCorrectDataIsSuccessful() {
-        loginMethods.enterNameForRegister(name);
-        loginMethods.enterEmailForRegister(email);
-        System.out.println(email);
-        loginMethods.enterPasswordForRegister(password);
-        System.out.println(password);
-        loginMethods.registerButtonClick();
-        loginMethods.getLoginPage();
-        loginMethods.waitForLoginPageLoad();
-        loginMethods.enterEmail(email);
-        loginMethods.enterPassword(password);
-        loginMethods.loginButtonClick();
-        loginMethods.waitForMainPageLoad();
-        loginMethods.getIntoProfile();
-        loginMethods.waitForProfilePageLoad();
-        Assert.assertTrue(driver.findElement(accountPageObject.getEXIT_BUTTON()).isDisplayed());
+        loginMethods.enterNameForRegister(name);//вводим Имя в поле имя
+        loginMethods.enterEmailForRegister(email);//вводим емейл в поле
+        loginMethods.enterPasswordForRegister(password);//вводим пароль в поле
+        loginMethods.registerButtonClick();//нажимаем на кнопку Зарегистрироваться
+        loginMethods.getLoginPage(); //переходим на страницу авторизации
+        loginMethods.waitForLoginPageLoad();//ждем загрузки страницы
+        loginMethods.enterEmail(email);//вводим емейл
+        loginMethods.enterPassword(password);//вводим пароль
+        loginMethods.loginButtonClick();//нажимаем на кнопку Войти
+        loginMethods.waitForMainPageLoad();//ждем загрузку страницы
+        loginMethods.getIntoProfile();//нажимаем кнопку Личный кабинет
+        loginMethods.waitForProfilePageLoad();//ждем загрузку страницы
+        Assert.assertTrue(driver.findElement(accountPageObject.getEXIT_BUTTON()).isDisplayed());//проверяем, что мы попали в профиль
 
     }
 
