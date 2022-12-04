@@ -1,8 +1,0 @@
-ru\package_model\ForgotPasswordPageObject.class
-ru\package_model\AccountPageObject.class
-ru\package_model\MainPageObject.class
-ru\package_model\RegisterPageObject.class
-ru\package_model\CredentialsGenerator.class
-ru\package_model\ConstructorMethods.class
-ru\package_model\LoginMethods.class
-ru\package_model\LoginPageObject.class
