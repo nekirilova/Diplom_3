@@ -11,6 +11,11 @@ public class MainPageObject {
     private final By SAUCE = By.xpath(".//div/span[text()='Соусы']");//локатор для раздела Соусы
     private final By FILLING = By.xpath(".//div/span[text()='Начинки']");//локатор для раздела Начинки
     private final By ENTER_ACCOUNT_BUTTON = By.xpath(".//button[text()='Войти в аккаунт']");//локатор для кнопки Войти в аккаунт
+
+    private final By SPICY_X = By.xpath(".//ul/a/p[text()='Соус Spicy-X']"); //локатор для соуса Spicy-X
+    private final By MEAT = By.xpath(".//ul/a/p[text()='Мясо бессмертных моллюсков Protostomia']");//Локатор для начинки
+    private final By SHINY_BUN = By.xpath(".//ul/a/p[text()='Флюоресцентная булка R2-D3']");//локатор для булки
+
     public String getMAIN_PAGE() {
         return MAIN_PAGE;
     }
@@ -35,5 +40,15 @@ public class MainPageObject {
     }
 
 
+    public By getSHINY_BUN() {
+        return SHINY_BUN;
+    }
 
+    public By getMEAT() {
+        return MEAT;
+    }
+
+    public By getSPICY_X() {
+        return SPICY_X;
+    }
 }
