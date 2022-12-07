@@ -28,6 +28,10 @@ public class ExitAccountTest {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
+        //        ChromeOptions options = new ChromeOptions();
+//        System.setProperty("webdriver.chrome.driver", "C:/Users/Aljona/ChromeDriver/yandexdriver.exe");
+//        options.setBinary("C:/Users/Aljona/AppData/Local/Yandex/YandexBrowser/Application/browser.exe");
+//        driver = new ChromeDriver(options);
         loginMethods = new LoginMethods(driver);
         loginMethods.getRegistrationPage();//открываем страницу регистрации
         loginMethods.waitForRegisterPageLoad();//ждем, когда загрузится страница регистрации

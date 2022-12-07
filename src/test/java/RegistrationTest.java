@@ -22,7 +22,10 @@ public class RegistrationTest {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
         driver = new ChromeDriver(options);
-       // RegisterPageObject registerPageObject = new RegisterPageObject();
+        //        ChromeOptions options = new ChromeOptions();
+//        System.setProperty("webdriver.chrome.driver", "C:/Users/Aljona/ChromeDriver/yandexdriver.exe");
+//        options.setBinary("C:/Users/Aljona/AppData/Local/Yandex/YandexBrowser/Application/browser.exe");
+//        driver = new ChromeDriver(options);
         accountPageObject = new AccountPageObject();
         loginMethods = new LoginMethods(driver);
         loginMethods.getRegistrationPage();//открываем страницу регистрации
